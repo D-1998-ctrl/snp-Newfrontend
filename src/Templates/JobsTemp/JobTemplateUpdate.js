@@ -32,10 +32,6 @@ const JobTemplateUpdate = () => {
 
   const { _id } = useParams(); // Get the job template ID from the URL parameters
   const navigate = useNavigate();
-
-
-
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -250,6 +246,7 @@ const JobTemplateUpdate = () => {
         const selectedValues = assigneesData.map((option) => option.value);
         setCombinedValues(selectedValues);
       }
+      
       tempallvalue();
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -331,6 +328,7 @@ const JobTemplateUpdate = () => {
       redirect: "follow",
     };
     const url = 'http://127.0.0.1:7500/workflow/jobtemplate/jobtemplate/';
+  
     fetch(url + _id, requestOptions)
       .then((response) => {
         if (!response.ok) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import {
@@ -16,19 +17,22 @@ import {
   Autocomplete,
   TextField,
   InputLabel,
-
+  IconButton,
   Switch,
   FormControlLabel,
   Chip
 
 } from '@mui/material';
 
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Editor from '../Texteditor/Editor';
 import Grid from '@mui/material/Unstable_Grid2';
 import Priority from '../Priority/Priority';
 import Status from '../Status/Status';
 import { toast } from "react-toastify";
 const Tasks = () => {
+  const navigate = useNavigate();
   const [templatename, settemplatename] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [startsin, setstartsin] = useState("");
@@ -85,7 +89,7 @@ const Tasks = () => {
   const [combinedValues, setCombinedValues] = useState([]);
   const [userData, setUserData] = useState([]);
 
-  console.log(combinedValues)
+  // console.log(combinedValues)
   useEffect(() => {
     fetchData();
   }, []);
@@ -178,7 +182,7 @@ const Tasks = () => {
 
   // task temp
   const [TaskTemplates, setTaskTemplates] = useState([]);
- 
+
   useEffect(() =>{
     fetchTaskData();
   })
@@ -192,7 +196,7 @@ const Tasks = () => {
         throw new Error("Failed to fetch task templates");
       }
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       setTaskTemplates(data.TaskTemplates
       );
     } catch (error) {
@@ -303,6 +307,13 @@ const Tasks = () => {
     settemplatename("");
     setStatus("");
   };
+
+
+  const handleEdit = (_id) => {
+
+    navigate("taskTempUpdate/" + _id);
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Container>
@@ -311,7 +322,7 @@ const Tasks = () => {
             <Button variant="contained" color="primary" onClick={handleCreateTask}>
               Create Task Template
             </Button>
-            <TableContainer component={Paper} sx={{ mt: 2 }}>
+            {/* <TableContainer component={Paper} sx={{ mt: 2 }}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -325,6 +336,38 @@ const Tasks = () => {
                       <TableCell>{template.templatename}</TableCell>
                       <TableCell>
                        
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer> */}
+              <TableContainer component={Paper} sx={{ mt: 2 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+
+                    <TableCell>Settings</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {TaskTemplates.map((template) => (
+                    <TableRow key={template._id}>
+                      <TableCell>{template.templatename}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          aria-label="edit"
+                          onClick={() => handleEdit(template._id)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          aria-label="delete"
+
+                        >
+                          <DeleteIcon />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -572,3 +615,4 @@ const Tasks = () => {
 };
 
 export default Tasks;
+

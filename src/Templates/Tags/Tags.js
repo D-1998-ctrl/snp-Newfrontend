@@ -109,8 +109,8 @@ const Tags = () => {
     }
   };
 
-  console.log(tagid);
-  console.log(tagidget);
+  // console.log(tagid);
+  // console.log(tagidget);
   const handleDelete = (_id) => {
     setGetId(_id);
     setOpenMenuId(false);

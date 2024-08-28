@@ -27,6 +27,10 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+
 const PipelineTemp = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -40,8 +44,6 @@ const PipelineTemp = () => {
   const handleClosePipelineTemp = () => {
     setShowForm(false);
   }
-
-
 
   // sort jobs
   const [sortbyjobs, setSortbyJobs] = useState([]);
@@ -296,7 +298,7 @@ const PipelineTemp = () => {
   const handleEdit = (_id) => {
     // Implement logic for editing here
     // console.log("Edit action triggered for template id: ", templateId);
-    navigate('PipelineTemplateUpdate/' + _id)
+    navigate('PipelineTempUpdate/' + _id)
 };
 
 const [openMenuId, setOpenMenuId] = useState(null);
@@ -345,7 +347,7 @@ const handleDelete = async (_id) => {
                   <TableRow key={pipeline._id}>
 
                     <TableCell>{pipeline.pipelineName}</TableCell>
-                    <TableCell>
+                    {/* <TableCell>
             <div 
               className="ci-menu-kebab" 
               onClick={() => toggleMenu(pipeline._id)} 
@@ -369,7 +371,22 @@ const handleDelete = async (_id) => {
                 </div>
               </div>
             )}
-          </TableCell>
+          </TableCell> */}
+            <TableCell>
+                                            <IconButton
+                                                aria-label="edit"
+                                                onClick={() => handleEdit(pipeline._id)}
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                            <IconButton
+                                                aria-label="delete"
+                                                onClick={() => handleDelete(pipeline._id)}
+                                                
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell> 
                     
                   </TableRow>
                 ))}

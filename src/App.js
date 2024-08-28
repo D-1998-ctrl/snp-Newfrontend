@@ -5,13 +5,16 @@ import Insights from './Pages/Insights';
 import Account from './Pages/Account';
 import Contact from './Pages/Contact';
 import ErrorPage from './Pages/ErrorPage';
-import Tasks from './Templates/Task/Tasks'
+import Tasks from './Templates/Task/Tasks';
+import TasksUpdate from './Templates/Task/TasksUpdate.js';
 import Tags from './Templates/Tags/Tags';
 import EmailTemp from './Templates/EmailTemp/EmailTemp';
+import EmailTempUpdate from './Templates/EmailTemp/EmailTempUpdate.js';
 import Templates from './Pages/Templates';
-import JobTemp from './Templates/JobsTemp/Jobtemp';
+import JobTemp from './Templates/JobsTemp/JobTemp';
 import JobTemplateUpdate from './Templates/JobsTemp/JobTemplateUpdate'
 import PipelineTemp from './Templates/PipelineTemp/PipelineTemp';
+import PipelineTempUpdate from './Templates/PipelineTemp/PipelineTempUpdate.js';
 import FolderTemp from './Templates/FoldersTemp/FolderTemp';
 import ChatTemp from './Templates/ChatsTemp/ChatTemp';
 import SMSTemp from './Templates/SMSTemp/SmsTemp';
@@ -30,6 +33,8 @@ import Pipeline from './Workflow/Pipeline';
 import WorkflowTask from './Workflow/Tasks'
 import TeamMember from './Users/TeamMember.js';
 import Jobs from './Pages/Jobs.js';
+import ChatTempUpdate from './Templates/ChatsTemp/ChatTempUpdate.js';
+import InvoiceTempUpdate from './Templates/InvoicesTemp/InvoiceTempUpdate.js';
 const App = () => {
   return (
 
@@ -50,15 +55,20 @@ const App = () => {
           <Route path='workflow/pipelines' element={<Pipeline/>}/>
           <Route path='firmtemp/templates' element={<Templates />}>
             <Route path="tasks" element={<Tasks />} />
+            <Route path='tasks/taskTempUpdate/:_id' element={<TasksUpdate/>} />
             <Route path='tags' element={<Tags />} />
             <Route path='emails' element={<EmailTemp />} />
+            <Route path='emails/emailTemplateUpdate/:_id' element={<EmailTempUpdate/>}/>
             <Route path='jobs' element={<JobTemp />} />
             <Route path="jobs/JobTemplateUpdate/:_id" element={<JobTemplateUpdate />} />
             <Route path='pipelines' element={<PipelineTemp />} />
+            <Route path='pipelines/PipelineTempUpdate/:_id' element={<PipelineTempUpdate/>}/>
             <Route path='folders' element={<FolderTemp />} />
             <Route path='chats' element={<ChatTemp />} />
+            <Route path='chats/chatTemplateUpdate/:_id' element={<ChatTempUpdate/>}/>
             <Route path='sms' element={<SMSTemp />} />
             <Route path='invoices' element={<InvoiceTemp />} />
+            <Route path='invoices/invoiceTempUpdate/:_id' element={<InvoiceTempUpdate/>}/>
             <Route path='organizers' element={<OrganizerTemp />} />
             <Route path='recurring-invoices' element={<RecurringInvoiceTemp />} />
             <Route path='signatures' element={<SignatureTemp />} />

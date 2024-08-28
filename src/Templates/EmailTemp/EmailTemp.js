@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
     Box,
@@ -24,13 +25,16 @@ import {
     Popover,
     InputLabel,
     TextField,
+    IconButton,
     // OutlinedInput, Chip,
     Autocomplete
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Editor from '../Texteditor/Editor';
 
 const EmailTemp = () => {
-
+    const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
     const [inputText, setInputText] = useState('');
     const [selectedShortcut, setSelectedShortcut] = useState('');
@@ -148,6 +152,7 @@ const EmailTemp = () => {
             setShortcuts(accountShortcuts);
         }
     }, [selectedOption]);
+    console.log(selectedOption)
     const handlechatsubject = (e) => {
         const { value } = e.target;
         setInputText(value);
@@ -257,6 +262,47 @@ const EmailTemp = () => {
     useEffect(() => {
         fetchEmailTemplates();
     }, []);
+
+    const handleEdit = (_id) => {
+
+        navigate("EmailTemplateUpdate/" + _id);
+      };
+
+
+      const handleDelete = (_id) => {
+        console.log(_id);
+    
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            redirect: 'follow',
+        };
+    
+        // Fetch URL with environment variable
+        const url = `http://127.0.0.1:7500/workflow/emailtemplate/${_id}`; // Ensure _id is part of the URL
+    
+        fetch(url, requestOptions)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete item');
+                }
+                return response.text();
+            })
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    window.location.reload(); // Consider using state management instead of reloading
+                }, 1000);
+            });
+    };
+    
     return (
         <Container>
             {!showForm ? (
@@ -275,13 +321,26 @@ const EmailTemp = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-
                                 {emailTemplates.map((template) => (
                                     <TableRow key={template._id}>
                                         <TableCell>{template.templatename}</TableCell>
                                         <TableCell>{template.emailsubject}</TableCell>
-                                        <TableCell>{/* Add logic for "Used in Pipelines" */}</TableCell>
-                                        <TableCell>{/* Add logic for "Settings" */}</TableCell>
+                                        <TableCell> </TableCell>
+                                        <TableCell>
+                                            <IconButton
+                                                aria-label="edit"
+                                                onClick={() => handleEdit(template._id)}
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                            <IconButton
+                                                aria-label="delete"
+                                                onClick={() => handleDelete(template._id)}
+                                                
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell> 
                                     </TableRow>
                                 ))}
                             </TableBody>

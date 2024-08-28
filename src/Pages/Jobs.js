@@ -121,9 +121,7 @@ const Example = () => {
   return (
     <div>
       <Stack direction={isMobile ? "column-reverse" : "column"} gap="8px">
-        
         <MaterialReactTable columns={columns} table={table} />
-        
       </Stack>
     </div>
   );
